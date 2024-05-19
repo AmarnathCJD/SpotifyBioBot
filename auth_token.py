@@ -50,7 +50,7 @@ async def authenticate():
             },
         ) as response:
             response = await response.json()
-            print("Refresh token:", response["refresh_token"])
+            print("Refresh Token:", response["refresh_token"])
             print("\n\nCopy the refresh token and paste it in your environment variables.")
 
 asyncio.run(authenticate())

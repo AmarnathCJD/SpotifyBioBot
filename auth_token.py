@@ -12,7 +12,10 @@ async def authenticate():
 
     CLIENT_ID = input("Enter your client ID: ")
     CLIENT_SECRET = input("Enter your client secret: ")
-    REDIRECT_URI = input("Enter your redirect URI: ")
+    REDIRECT_URI = input("Enter your redirect URI (skip: http://localhost:3000): ")
+    
+    if not REDIRECT_URI:
+        REDIRECT_URI = "http://localhost:3000"
 
     base64_encoded = base64.b64encode(
         f"{CLIENT_ID}:{CLIENT_SECRET}".encode()).decode()
@@ -30,6 +33,8 @@ async def authenticate():
             print("Visit the following URL to authenticate:")
             print(response.url)
             print("After authenticating, paste the code from the URL here.")
+            print("Example: http://localhost:3000?code=YOUR_CODE")
+            print("copy the YOUR_CODE part.")
             code = input("Enter the code: ")
 
         async with session.post(
@@ -46,6 +51,6 @@ async def authenticate():
         ) as response:
             response = await response.json()
             print("Refresh token:", response["refresh_token"])
-            print("\n\nSave to .env file:\n")
+            print("\n\nCopy the refresh token and paste it in your environment variables.")
 
 asyncio.run(authenticate())
